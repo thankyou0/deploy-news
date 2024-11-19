@@ -8,48 +8,17 @@
 // const os = require('os');
 
 import { Cluster } from "puppeteer-cluster";
-import randomUseragent from "random-useragent"; // Added random-useragent
+// import randomUseragent from "random-useragent"; // Added random-useragent
 import addSearchLocation from "../controllers/csearchLocation.js";
 import newsProvidermodel from "../models/mnewsProvider.js";
-import fs from 'fs';
-import path from 'path';
-import os from 'os';
+
+// puppeteer = require("puppeteer-core");
+// chromium = require("@sparticuz/chromium")
+import puppeteer from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
 
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-
-const findChromeUserDataDir = () => {
-  let possiblePaths = [];
-
-  if (process.platform === 'win32') {
-    const localAppData = process.env.LOCALAPPDATA;
-    const appData = process.env.APPDATA;
-    const username = process.env.USERNAME || os.userInfo().username;
-
-    if (localAppData) {
-      possiblePaths.push(path.join(localAppData, 'Google', 'Chrome', 'User Data'));
-    }
-    if (appData) {
-      possiblePaths.push(path.join(appData, 'Google', 'Chrome', 'User Data'));
-    }
-    possiblePaths.push(path.join('C:', 'Users', username, 'AppData', 'Local', 'Google', 'Chrome', 'User Data'));
-  } else if (process.platform === 'darwin') {
-    possiblePaths.push(path.join(os.homedir(), 'Library', 'Application Support', 'Google', 'Chrome'));
-  } else {
-    possiblePaths.push(path.join(os.homedir(), '.config', 'google-chrome'));
-  }
-
-  for (const dir of possiblePaths) {
-    if (fs.existsSync(dir)) {
-      return dir;
-    }
-  }
-
-  console.log('Could not find Chrome user data directory');
-  return null;
-};
-
+// const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 
 const scanForLinks = async (page) => {
@@ -107,24 +76,13 @@ const Scrap = async ({ searchText, site, tbs, gl, location, page }) => {
   }
 
 
-  const userDataDir = findChromeUserDataDir();
-  if (!userDataDir) {
-    console.error('Unable to find Chrome user data directory. Please specify it manually.');
-    return;
-  }
-
   try {
     const puppeteerOptions = {
-      headless: false,
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        // `--user-data-dir=${userDataDir}`,
-        // "--enable-automation"  // This flag might be necessary for some extensions
-      ],
-      // ignoreDefaultArgs: ["--enable-automation"],  // This prevents Puppeteer from using a temporary profile
-      // executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
-      defaultViewport: false,
+      args: [...chromium.args, '--no-sandbox', '--disable-setuid-sandbox', '--hide-scrollbars'],
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath() || puppeteer.executablePath(),
+      headless: chromium.headless,
+      ignoreDefaultArgs: chromium.ignoreDefaultArgs,
     };
 
     const cluster = await Cluster.launch({
@@ -156,9 +114,10 @@ const Scrap = async ({ searchText, site, tbs, gl, location, page }) => {
       // await page.setUserAgent(
       //   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
       // );
-      await page.setUserAgent(
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.864.48 Safari/537.36 Edg/91.0.864.48"
-      );
+
+      // await page.setUserAgent(
+      //   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.864.48 Safari/537.36 Edg/91.0.864.48"
+      // );  // running with no captcha
 
 
       // const userAgent = randomUseragent.getRandom(); // Get a random user agent

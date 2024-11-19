@@ -1,5 +1,7 @@
-import puppeteer from "puppeteer";
-import randomUseragent from "random-useragent";
+// import puppeteer from "puppeteer";
+import puppeteer from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
+// import randomUseragent from "random-useragent";
 import top_stories_model from "../models/mtopStories.js";
 import newsProvidermodel from "../models/mnewsProvider.js";
 
@@ -9,43 +11,7 @@ import newsProvidermodel from "../models/mnewsProvider.js";
 // const newsProvidermodel = require("../models/mnewsProvider.js");
 
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-
-
-
-// const findChromeUserDataDir = () => {
-// 	let possiblePaths = [];
-
-// 	if (process.platform === 'win32') {
-// 		const localAppData = process.env.LOCALAPPDATA;
-// 		const appData = process.env.APPDATA;
-// 		const username = process.env.USERNAME || os.userInfo().username;
-
-// 		if (localAppData) {
-// 			possiblePaths.push(path.join(localAppData, 'Google', 'Chrome', 'User Data'));
-// 		}
-// 		if (appData) {
-// 			possiblePaths.push(path.join(appData, 'Google', 'Chrome', 'User Data'));
-// 		}
-// 		possiblePaths.push(path.join('C:', 'Users', username, 'AppData', 'Local', 'Google', 'Chrome', 'User Data'));
-// 	} else if (process.platform === 'darwin') {
-// 		possiblePaths.push(path.join(os.homedir(), 'Library', 'Application Support', 'Google', 'Chrome'));
-// 	} else {
-// 		possiblePaths.push(path.join(os.homedir(), '.config', 'google-chrome'));
-// 	}
-
-// 	for (const dir of possiblePaths) {
-// 		if (fs.existsSync(dir)) {
-// 			return dir;
-// 		}
-// 	}
-
-// 	console.log('Could not find Chrome user data directory');
-// 	return null;
-// };
-
-
+// const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const scanForLinks = async (page) => {
 
@@ -83,33 +49,22 @@ const scanForLinks = async (page) => {
 const Scrap = async (searchby) => {
 
 
-	// const userDataDir = findChromeUserDataDir();
-	// if (!userDataDir) {
-	// 	console.error('Unable to find Chrome user data directory. Please specify it manually.');
-	// 	return;
-	// }
-
 
 	try {
 		let country = searchby.country;
 		const puppeteerOptions = {
-			headless: false,
-			args: [
-				"--no-sandbox",
-				"--disable-setuid-sandbox",
-				// `--user-data-dir=${userDataDir}`,
-				// "--enable-automation"  // This flag might be necessary for some extensions
-			],
-			// ignoreDefaultArgs: ["--enable-automation"],  // This prevents Puppeteer from using a temporary profile
-			// executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
-			defaultViewport: false,
+			args: [...chromium.args, '--no-sandbox', '--disable-setuid-sandbox', '--hide-scrollbars'],
+			defaultViewport: chromium.defaultViewport,
+			executablePath: await chromium.executablePath() || puppeteer.executablePath(),
+			headless: chromium.headless,
+			ignoreDefaultArgs: chromium.ignoreDefaultArgs,
 		};
 
 		const browser = await puppeteer.launch(puppeteerOptions);
 		const page = await browser.newPage();
 
-		const userAgent = randomUseragent.getRandom(); // Get a random user agent
-		await page.setUserAgent(userAgent); // Set the random user agent
+		// const userAgent = randomUseragent.getRandom(); // Get a random user agent
+		// await page.setUserAgent(userAgent); // Set the random user agent
 
 		console.log(`Starting to search for Top stories in ${country}`);
 

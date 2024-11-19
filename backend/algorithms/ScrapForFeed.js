@@ -5,42 +5,9 @@
 // const os = require('os');
 
 import { Cluster } from "puppeteer-cluster";
-import randomUseragent from "random-useragent"; // Added random-useragent
-import fs from 'fs';
-import path from 'path';
-import os from 'os';
-
-
-const findChromeUserDataDir = () => {
-  let possiblePaths = [];
-
-  if (process.platform === 'win32') {
-    const localAppData = process.env.LOCALAPPDATA;
-    const appData = process.env.APPDATA;
-    const username = process.env.USERNAME || os.userInfo().username;
-
-    if (localAppData) {
-      possiblePaths.push(path.join(localAppData, 'Google', 'Chrome', 'User Data'));
-    }
-    if (appData) {
-      possiblePaths.push(path.join(appData, 'Google', 'Chrome', 'User Data'));
-    }
-    possiblePaths.push(path.join('C:', 'Users', username, 'AppData', 'Local', 'Google', 'Chrome', 'User Data'));
-  } else if (process.platform === 'darwin') {
-    possiblePaths.push(path.join(os.homedir(), 'Library', 'Application Support', 'Google', 'Chrome'));
-  } else {
-    possiblePaths.push(path.join(os.homedir(), '.config', 'google-chrome'));
-  }
-
-  for (const dir of possiblePaths) {
-    if (fs.existsSync(dir)) {
-      return dir;
-    }
-  }
-
-  console.log('Could not find Chrome user data directory');
-  return null;
-};
+// import randomUseragent from "random-useragent"; // Added random-useragent
+import puppeteer from "puppeteer-core";
+import chromium from "@sparticuz/chromium";
 
 
 
@@ -86,26 +53,16 @@ const scanForLinks = async (page, count) => {
 const ScrapForFeed = async (SearchTexts) => {
 
 
-  const userDataDir = findChromeUserDataDir();
-  if (!userDataDir) {
-    console.error('Unable to find Chrome user data directory. Please specify it manually.');
-    return;
-  }
-
-
   try {
     const puppeteerOptions = {
-      headless: false,
-      args: ["--no-sandbox",
-        "--disable-setuid-sandbox",
-        // `--user-data-dir=${userDataDir}`,
-        // "--enable-automation"
-      ],
-      // ignoreDefaultArgs: ["--enable-automation"],  // This prevents Puppeteer from using a temporary profile
-      // executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
-
-      defaultViewport: false,
+      args: [...chromium.args, '--no-sandbox', '--disable-setuid-sandbox', '--hide-scrollbars'],
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath() || puppeteer.executablePath(),
+      headless: chromium.headless,
+      ignoreDefaultArgs: chromium.ignoreDefaultArgs,
     };
+
+    
     const cluster = await Cluster.launch({
       concurrency: Cluster.CONCURRENCY_PAGE,
       maxConcurrency: 1,
@@ -126,9 +83,9 @@ const ScrapForFeed = async (SearchTexts) => {
 
       // console.log(url);
 
-      await page.setUserAgent(
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36"
-      );
+      // await page.setUserAgent(
+      //   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36"
+      // ); // working 
 
       // await page.setUserAgent(
       //   "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0"
