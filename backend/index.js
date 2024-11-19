@@ -52,6 +52,7 @@ app.use(cors({
 //   next();
 // });
 
+
 app.get("/api/checkauth", checkAuth);
 app.use("/api/user", userroute);
 app.use("/api/algorithms", algorithmsroute);
