@@ -40,17 +40,17 @@ mongoose.connect(process.env.MONGO_URL).then(() => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({
-  origin: "*",
+  origin: process.env.FRONTEND_URL,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "authorization"],
   credentials: true,
 }));
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   next();
+// });
 
 app.get("/api/checkauth", checkAuth);
 app.use("/api/user", userroute);
