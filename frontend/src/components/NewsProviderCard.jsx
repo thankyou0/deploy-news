@@ -29,7 +29,7 @@ const NewsProviderCard = ({ name, logoUrl, baseURL, provider, onUnfollow }) => {
 
   const HandleSeeArticles = () => {
     let myURL = baseURL.replace(/^https?:\/\//, '');
-    myURL = `http://localhost:3000/search?site=${myURL}`;
+    myURL = `https://deploy-news-frontend.vercel.app/?site=${myURL}`;
     window.open(myURL, '_blank');
   };
 
