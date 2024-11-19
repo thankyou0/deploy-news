@@ -291,7 +291,7 @@ const Navbar = () => {
 
             {TokenExist && (<>
               <div>
-                <form className="d-flex mx-auto" onSubmit={handleSearch} style={{ flexGrow: 1, justifyContent: 'center' }}>
+                <div className="d-flex mx-auto" style={{ flexGrow: 1, justifyContent: 'center' }}>
                   <input
                     className="form-control me-2"
                     type="search"
@@ -319,6 +319,7 @@ const Navbar = () => {
                         transition: 'background-color 0.3s ease', // Smooth color transition
                         color: "black"
                       }}
+                      onClick={handleSearch}
                     >
                       Search
                     </Button>
@@ -471,7 +472,7 @@ const Navbar = () => {
                       </Box>
                     </Menu>
                   </div>
-                </form>
+                </div>
 
 
                 {advancedSearchOpen && (
