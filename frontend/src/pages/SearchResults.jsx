@@ -253,6 +253,7 @@ const SearchResults = (props) => {
       params: { q, site, tbs, gl, location },
     });
 
+    console.log(response.data);
     if (response.data?.success) {
 
       const articles = response.data?.articles;

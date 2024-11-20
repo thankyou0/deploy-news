@@ -220,10 +220,12 @@ const Navbar = () => {
 
   const handleAddQuickSearch = () => {
 
+    console.log(newQuickSearch);
 
     const response = POST('/api/quicksearch/add', { quickSearchTextFromFrontend: newQuickSearch });
     response.then((response) => {
 
+      console.log(response.data);
       if (response.data?.caught) {
         navigate('/login'); return;
         // toast.error(response.data?.message);
@@ -246,6 +248,7 @@ const Navbar = () => {
 
       const response = DELETE('/api/quicksearch/delete', { quickSearchText: textToRemove });
       response.then(() => {
+        console.log(response.data);
         if (response.data?.caught) {
           navigate('/login'); return;
           // toast.error(response.data?.message);

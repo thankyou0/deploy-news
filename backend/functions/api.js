@@ -153,7 +153,8 @@ router.use(express.urlencoded({ extended: false }));
 
 
 router.use(cors({
-  origin: "https://deploy-news-frontend.vercel.app",
+  // origin: "https://deploy-news-frontend.vercel.app",
+  origin: "http://localhost:3000",
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "authorization"],
   credentials: true,
