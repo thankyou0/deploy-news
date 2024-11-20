@@ -2,8 +2,8 @@
 import puppeteer from "puppeteer-core";
 import chromium from "@sparticuz/chromium";
 // import randomUseragent from "random-useragent";
-import top_stories_model from "../models/mtopStories.js";
-import newsProvidermodel from "../models/mnewsProvider.js";
+import {top_stories_model} from "../models/mtopStories.js";
+import {newsProvidermodel} from "../models/mnewsProvider.js";
 
 // const puppeteer = require("puppeteer");
 // const randomUseragent = require("random-useragent"); // Added random-useragent
@@ -219,9 +219,9 @@ const ScrapTop_stories = async (req, res) => {
 
 // const temp = { ScrapTop_stories };
 
-export default ScrapTop_stories;
+// export default ScrapTop_stories;
 
-// export { ScrapTop_stories };
+export { ScrapTop_stories };
 
 
 

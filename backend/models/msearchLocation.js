@@ -9,7 +9,7 @@ const searchLocationSchema = new Schema(
   {
     user_id:
     {
-      type: Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       required: true, ref: "User"
     },
 
@@ -27,4 +27,4 @@ const searchLocationSchema = new Schema(
 
 const searchLocation_model = model("searchLocation", searchLocationSchema);
 
-export default searchLocation_model;
+export {searchLocation_model};

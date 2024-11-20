@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const historyschema = new Schema({
 
     userid: {
-        type: Schema.Type.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "user"
     },
     historyData: [
@@ -28,4 +28,4 @@ const historyschema = new Schema({
 });
 
 const History = mongoose.model("History", historyschema);
-module.exports = History;
+export {History};

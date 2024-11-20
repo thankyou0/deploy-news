@@ -30,4 +30,4 @@ const newsProviderschema = new mongoose.Schema({
 
 const newsProvidermodel = mongoose.model('newsProvider', newsProviderschema);
 
-export default newsProvidermodel;
+export {newsProvidermodel};

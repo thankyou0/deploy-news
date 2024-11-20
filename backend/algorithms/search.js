@@ -9,8 +9,8 @@
 
 import { Cluster } from "puppeteer-cluster";
 // import randomUseragent from "random-useragent"; // Added random-useragent
-import addSearchLocation from "../controllers/csearchLocation.js";
-import newsProvidermodel from "../models/mnewsProvider.js";
+import {addSearchLocation} from "../controllers/csearchLocation.js";
+import {newsProvidermodel} from "../models/mnewsProvider.js";
 
 // puppeteer = require("puppeteer-core");
 // chromium = require("@sparticuz/chromium")
@@ -198,7 +198,5 @@ const scrapSearch = async (req, res) => {
 
 
 // module.exports = { scrapSearch, Scrap };
-const temp = { scrapSearch, Scrap };
-
-export default temp;
+export { scrapSearch, Scrap };
 

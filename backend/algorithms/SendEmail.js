@@ -72,4 +72,4 @@ async function sendEmail(username, email, code) {
 
 // module.exports = sendEmail;
 
-export default sendEmail;
+export {sendEmail};

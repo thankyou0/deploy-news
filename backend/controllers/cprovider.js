@@ -2,8 +2,8 @@
 // const usermodel = require('../models/muser.js');
 // const cloudinary_v2 = require('../utils/cloudinary').v2;
 
-import newsProvidermodel from '../models/mnewsProvider.js';
-import usermodel from '../models/muser.js';
+import {newsProvidermodel} from '../models/mnewsProvider.js';
+import {usermodel} from '../models/muser.js';
 // import cloudinary_v2 from '../utils/cloudinary.js';
 
 import { v2 as cloudinary_v2 } from 'cloudinary';

@@ -1,6 +1,6 @@
 // const quickSearch_model = require("../models/mquicksearch");
 
-import quickSearch_model from "../models/mquicksearch.js";
+import {quickSearch_model} from "../models/mquicksearch.js";
 
 const getQuickSearch = async (req, res) => {
 

@@ -13,4 +13,6 @@ router.post("/add", addQuickSearch);
 router.delete("/delete", deleteQuickSearch);
 
 
-export default router;;
+// export default router;;
+
+export { router };

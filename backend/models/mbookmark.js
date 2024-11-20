@@ -37,4 +37,4 @@ const bookmarkschema = new mongoose.Schema({
 
 const bookmark_model = mongoose.model('bookmark', bookmarkschema);
 
-export default bookmark_model;
+export {bookmark_model};

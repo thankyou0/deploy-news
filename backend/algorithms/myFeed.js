@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import searchLocation_model from "../models/msearchLocation.js";
+import {searchLocation_model} from "../models/msearchLocation.js";
 import { ScrapForFeed } from "../algorithms/ScrapForFeed.js";
 
 const getTextByCount = async (id) => {

@@ -15,4 +15,6 @@ router.get("/getmyfeed/text/4", ByText4);
 router.get("/getmyfeed/topic/2", ByTopic2);
 
 // export default router;;
-export default router;
+// export default router;
+export { router };
+

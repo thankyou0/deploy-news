@@ -6,7 +6,7 @@
 import express from "express";
 const router = express.Router();
 import { getAllProviders, getFollowingProviders, createChannel, getChannels, deleteChannel } from "../controllers/cprovider.js";
-import checkAuth from "../middleware/checkAuth.js";
+import {checkAuth} from "../middleware/checkAuth.js";
 import multer from 'multer';
 
 
@@ -31,4 +31,6 @@ router.get("/getchannels", checkAuth, getChannels);
 
 router.delete("/deletechannel/:id", checkAuth, deleteChannel);
 
-export default router;;
+// export default router;;
+
+export { router };

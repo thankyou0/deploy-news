@@ -5,11 +5,11 @@
 // const comment_model = require('../models/mcomments');
 // const { v4: uuidv4 } = require('uuid');
 
-import bookmark_model from '../models/mbookmark.js';
-import like_model from '../models/mlike.js';
-import usermodel from '../models/muser.js';
-import newsProvidermodel from '../models/mnewsProvider.js';
-import comment_model from '../models/mcomments.js';
+import {bookmark_model} from '../models/mbookmark.js';
+import {like_model} from '../models/mlike.js';
+import {usermodel} from '../models/muser.js';
+import {newsProvidermodel} from '../models/mnewsProvider.js';
+import {comment_model} from '../models/mcomments.js';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -120,7 +120,7 @@ const isLiked = async (req, res) => {
 
 const getNumLikes = async (req, res) => {
 
-  
+
   const { title } = req.body;
 
   if (!title) {
@@ -333,8 +333,7 @@ const getNumComments = async (req, res) => {
 
 // module.exports = { addBookmarkArticle, deleteBookmarkArticle, getBookmarkArticle, isBookmarked, addLikeArticle, deleteLikeArticle, isLiked, addFollow, deleteFollow, isFollowed, addComment, deleteComment, getCommentsOfArticles, getNumLikes, getNumComments };
 
-const temp = { addBookmarkArticle, deleteBookmarkArticle, getBookmarkArticle, isBookmarked, addLikeArticle, deleteLikeArticle, isLiked, addFollow, deleteFollow, isFollowed, addComment, deleteComment, getCommentsOfArticles, getNumLikes, getNumComments };
+export { addBookmarkArticle, deleteBookmarkArticle, getBookmarkArticle, isBookmarked, addLikeArticle, deleteLikeArticle, isLiked, addFollow, deleteFollow, isFollowed, addComment, deleteComment, getCommentsOfArticles, getNumLikes, getNumComments };
 
-export default temp;
 
 
