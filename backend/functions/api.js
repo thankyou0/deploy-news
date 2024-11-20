@@ -149,8 +149,11 @@ mongoose.connect(process.env.MONGO_URL).then(() => {
 
 router.use(express.json());
 router.use(express.urlencoded({ extended: false }));
+
+
+
 router.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: "https://deploy-news-frontend.vercel.app",
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   allowedHeaders: ["Content-Type", "authorization"],
   credentials: true,
@@ -190,6 +193,7 @@ app.use('/.netlify/functions/api', router);
 export const handler = serverless(app);
 //const port = 8080;
 
-//app.listen(process.env.PORT || port, () => {
-//	console.log(`Listening on port ${port}`);
-//});
+
+app.listen(process.env.PORT || port, () => {
+	console.log(`Listening on port ${port}`);
+});
